@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Batterypacks list</h1>
+    <table id="batteries">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for batteryPack in batteryPacks %}
+            <tr>
+                <td>{{ batteryPack.name ? batteryPack.name : 'anonymous' }}</td>
+                <td>{{ batteryPack.type }}</td>
+                <td>{{ batteryPack.count }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
