@@ -31,8 +31,11 @@ funcionality:
  -no-interaction
  
  4 - php bin/console server:run
-    * endpoints:
+ 
+    - endpoints:
+        
     http://localhost:8000/app_dev.php/ - statistic page
+
     
 # Run test
  * vendor/bin/phpunit
