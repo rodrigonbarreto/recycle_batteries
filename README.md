@@ -27,8 +27,7 @@ funcionality:
  
  2 - php bin/console doctrine:database:create 
  
- 3 - php bin/console doctrine:migrations:migrate -
- -no-interaction
+ 3 - php bin/console doctrine:migrations:migrate --no-interaction
  
  4 - php bin/console server:run
  
