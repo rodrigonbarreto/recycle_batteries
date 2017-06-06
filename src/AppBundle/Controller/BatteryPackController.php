@@ -39,7 +39,9 @@ class BatteryPackController extends Controller
      */
     public function newAction(Request $request)
     {
+    //todo: this line not needed. Just don't pass entity into a form. Form will create it for you. 
         $batteryPack = new Batterypack();
+        //todo: BatteryPackType::class
         $form = $this->createForm('AppBundle\Form\BatteryPackType', $batteryPack);
         $form->handleRequest($request);
 
