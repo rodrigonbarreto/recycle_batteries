@@ -37,6 +37,7 @@ class BatteryPackType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
+        //todo: BatteryPack::class
             'data_class' => 'AppBundle\Entity\BatteryPack'
         ));
     }
