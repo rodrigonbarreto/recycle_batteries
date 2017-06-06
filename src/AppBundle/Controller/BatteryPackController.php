@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\BatteryPack;
+use AppBundle\Form\BatteryPackType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +41,7 @@ class BatteryPackController extends Controller
     public function newAction(Request $request)
     {
         $batteryPack = new Batterypack();
-        $form = $this->createForm('AppBundle\Form\BatteryPackType', $batteryPack);
+        $form = $this->createForm(BatteryPackType::class, $batteryPack);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
