@@ -4,28 +4,30 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\BatteryPack;
 use AppBundle\Form\BatteryPackType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use \Symfony\Component\HttpFoundation\Response;
 
 /**
  * Batterypack controller.
  *
  * @Route("batterypack")
  */
-class BatteryPackController extends Controller
+class BatteryPackController extends BaseController
 {
     /**
      * Lists all batteryPack entities.
      *
      * @Route("/", name="batterypack_index")
      * @Method("GET")
+     *
+     * @return Response
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $batteryPacks = $em->getRepository('AppBundle:BatteryPack')->findAll();
+        /** @var BatteryPack $batteryPacks */
+        $batteryPacks = $this->getEntityManager()->getRepository(BatteryPack::class)->findAll();
 
         return $this->render('batterypack/index.html.twig', array(
             'batteryPacks' => $batteryPacks,
@@ -37,14 +39,17 @@ class BatteryPackController extends Controller
      *
      * @Route("/new", name="batterypack_new")
      * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
-        $batteryPack = new Batterypack();
-        $form = $this->createForm(BatteryPackType::class, $batteryPack);
+        $form = $this->createForm(BatteryPackType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $batteryPack = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($batteryPack);
             $em->flush();
@@ -53,7 +58,6 @@ class BatteryPackController extends Controller
         }
 
         return $this->render('batterypack/new.html.twig', array(
-            'batteryPack' => $batteryPack,
             'form' => $form->createView(),
         ));
     }
@@ -63,6 +67,9 @@ class BatteryPackController extends Controller
      *
      * @Route("/{id}", name="batterypack_show")
      * @Method("GET")
+     *
+     * @param BatteryPack $batteryPack
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(BatteryPack $batteryPack)
     {
@@ -79,11 +86,16 @@ class BatteryPackController extends Controller
      *
      * @Route("/{id}/edit", name="batterypack_edit")
      * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param BatteryPack $batteryPack
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
+
     public function editAction(Request $request, BatteryPack $batteryPack)
     {
         $deleteForm = $this->createDeleteForm($batteryPack);
-        $editForm = $this->createForm('AppBundle\Form\BatteryPackType', $batteryPack);
+        $editForm = $this->createForm(BatteryPackType::class, $batteryPack);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -100,10 +112,15 @@ class BatteryPackController extends Controller
     }
 
     /**
+     *
      * Deletes a batteryPack entity.
      *
      * @Route("/{id}", name="batterypack_delete")
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param BatteryPack $batteryPack
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, BatteryPack $batteryPack)
     {
@@ -120,11 +137,9 @@ class BatteryPackController extends Controller
     }
 
     /**
-     * Creates a form to delete a batteryPack entity.
-     *
-     * @param BatteryPack $batteryPack The batteryPack entity
-     *
-     * @return \Symfony\Component\Form\Form The form
+     *  Creates a form to delete a batteryPack entity.
+     * @param BatteryPack $batteryPack
+     * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
      */
     private function createDeleteForm(BatteryPack $batteryPack)
     {

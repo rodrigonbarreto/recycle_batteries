@@ -29,6 +29,8 @@ funcionality:
  
  3 - php bin/console doctrine:migrations:migrate --no-interaction
  
+ 5 - php bin/console doctrine:fixtures:load
+ 
  4 - php bin/console server:run
  
     - endpoints:

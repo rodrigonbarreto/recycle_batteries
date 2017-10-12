@@ -4,17 +4,18 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\BatteryPack;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
     /**
      * @Route("/", name="homepage")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        $batteryPacks = $this->getDoctrine()->getRepository(BatteryPack::class)->getBatteriesStatistics();
+        $batteryPacks = $this->getEntityManager()->getRepository(BatteryPack::class)->getBatteriesStatistics();
         return $this->render('default/index.html.twig', [
             'batteryPacks' => $batteryPacks,
         ]);

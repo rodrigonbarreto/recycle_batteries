@@ -9,7 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class BatteryPackType extends AbstractType
 {
@@ -21,14 +20,13 @@ class BatteryPackType extends AbstractType
 
         $builder
             ->add('name')
-            ->add('count', NumberType::class,[
-                'constraints' => new NotBlank(),
-            ])
-            ->add('type', ChoiceType::class, array(
-                'choices' => BatteryTypeEnum::ELEMENTS,
-                'constraints' => new NotBlank(),
-                'placeholder' => 'select'
-            ));
+            ->add('count', NumberType::class)
+            ->add('type', ChoiceType::class,
+                [
+                    'choices' => BatteryTypeEnum::ELEMENTS,
+                    'placeholder' => 'select',
+                ]
+            );
 
     }
     

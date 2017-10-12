@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * BatteryPack
@@ -25,6 +26,8 @@ class BatteryPack
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 255)
      */
     private $name;
 
@@ -32,13 +35,15 @@ class BatteryPack
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 255)
      */
     private $type;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="count", type="string", length=255)
+     * @ORM\Column(name="count", type="integer", length=255)
      */
     private $count;
 
@@ -48,7 +53,7 @@ class BatteryPack
      *
      * @return int
      */
-    public function getId()
+    public function getId() : ?int
     {
         return $this->id;
     }
@@ -60,7 +65,7 @@ class BatteryPack
      *
      * @return BatteryPack
      */
-    public function setName($name)
+    public function setName(string $name) : BatteryPack
     {
         $this->name = $name;
 
@@ -72,7 +77,7 @@ class BatteryPack
      *
      * @return string
      */
-    public function getName()
+    public function getName() :?string
     {
         return $this->name;
     }
@@ -84,7 +89,7 @@ class BatteryPack
      *
      * @return BatteryPack
      */
-    public function setType($type)
+    public function setType(string $type) : BatteryPack
     {
         $this->type = $type;
 
@@ -96,7 +101,7 @@ class BatteryPack
      *
      * @return string
      */
-    public function getType()
+    public function getType() :?string
     {
         return $this->type;
     }
@@ -104,11 +109,11 @@ class BatteryPack
     /**
      * Set count
      *
-     * @param string $count
+     * @param int $count
      *
      * @return BatteryPack
      */
-    public function setCount($count)
+    public function setCount(int $count) :BatteryPack
     {
         $this->count = $count;
 
@@ -118,11 +123,10 @@ class BatteryPack
     /**
      * Get count
      *
-     * @return string
+     * @return int
      */
-    public function getCount()
+    public function getCount() :?int
     {
         return $this->count;
     }
 }
-
